@@ -1,11 +1,11 @@
 package com.inatel.quotationmanagement.service.implementation;
 
-import com.inatel.quotationmanagement.api.StockManagementApi;
+import com.inatel.quotationmanagement.api.StockManagementApiService;
 import com.inatel.quotationmanagement.data.Quote;
 import com.inatel.quotationmanagement.data.Stock;
 import com.inatel.quotationmanagement.data.dto.CreateStock;
 import com.inatel.quotationmanagement.data.dto.StockByStockId;
-import com.inatel.quotationmanagement.data.dto.StockFromApi;
+import com.inatel.quotationmanagement.api.dto.StockFromApi;
 import com.inatel.quotationmanagement.repository.QuoteRepository;
 import com.inatel.quotationmanagement.repository.StockRepository;
 import com.inatel.quotationmanagement.service.StockService;
@@ -26,10 +26,10 @@ public class StockServiceImpl implements StockService {
     @Autowired
     private QuoteRepository quoteRepository;
     @Autowired
-    private StockManagementApi stockManagementApi;
+    private StockManagementApiService stockManagementApiService;
 
     @Override
-    public Stock createStock(CreateStock stock) {
+    public Stock createQuote(CreateStock stock) {
         String stockId = stock.getStockId();
         Map<LocalDate, String> quoteMap = stock.getQuotes();
 
@@ -41,7 +41,7 @@ public class StockServiceImpl implements StockService {
                 })
                 .collect(Collectors.toList());
 
-        List<StockFromApi> stocksFromApi = stockManagementApi.checkStock();
+        List<StockFromApi> stocksFromApi = stockManagementApiService.getAllStocks();
         StockValiator.validateStockExists(stocksFromApi, stockId);
 
         quoteRepository.saveAll(quotes);
@@ -60,6 +60,12 @@ public class StockServiceImpl implements StockService {
     @Override
     public List<Stock> findAll() {
         return stockRepository.findAll();
+    }
+
+
+    @Override
+    public void deleteStockCache() {
+        stockManagementApiService.deleteStockCache();
     }
 
 }

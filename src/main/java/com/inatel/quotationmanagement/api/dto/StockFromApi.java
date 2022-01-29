@@ -1,4 +1,4 @@
-package com.inatel.quotationmanagement.data.dto;
+package com.inatel.quotationmanagement.api.dto;
 
 import lombok.Getter;
 

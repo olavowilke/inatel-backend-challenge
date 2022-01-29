@@ -9,10 +9,12 @@ import java.util.List;
 
 public interface StockService {
 
-    Stock createStock(CreateStock stock);
+    Stock createQuote(CreateStock stock);
 
     List<StockByStockId> getQuotesByStockId(String stockId);
 
     List<Stock> findAll();
+
+    void deleteStockCache();
 
 }

@@ -17,7 +17,7 @@ public class StockController {
 
     @PostMapping("/stock")
     public Stock createStockQuote(@RequestBody CreateStock stock) {
-        return stockService.createStock(stock);
+        return stockService.createQuote(stock);
     }
 
     @GetMapping("/quotes")
@@ -28,6 +28,11 @@ public class StockController {
     @GetMapping
     public List<Stock> getAllStocks() {
         return stockService.findAll();
+    }
+
+    @DeleteMapping("/stockcache")
+    public void deleteCache(){
+        stockService.deleteStockCache();
     }
 
 }

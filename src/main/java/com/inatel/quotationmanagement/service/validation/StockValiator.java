@@ -1,6 +1,6 @@
 package com.inatel.quotationmanagement.service.validation;
 
-import com.inatel.quotationmanagement.data.dto.StockFromApi;
+import com.inatel.quotationmanagement.api.dto.StockFromApi;
 import com.inatel.quotationmanagement.exception_handler.exception.StockNotFoundException;
 
 import java.util.List;
