@@ -5,10 +5,14 @@ import com.inatel.quotationmanagement.data.Stock;
 import com.inatel.quotationmanagement.data.dto.CreateStock;
 import com.inatel.quotationmanagement.data.dto.StockByStockId;
 
+import java.util.List;
+
 public interface StockService {
 
     Stock createStock(CreateStock stock);
 
-    StockByStockId getQuotesByStockId(String stockId);
+    List<StockByStockId> getQuotesByStockId(String stockId);
+
+    List<Stock> findAll();
 
 }

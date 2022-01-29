@@ -1,5 +1,6 @@
 package com.inatel.quotationmanagement.data.dto;
 
+import com.inatel.quotationmanagement.data.Quote;
 import com.inatel.quotationmanagement.data.Stock;
 
 import java.time.LocalDate;
@@ -9,7 +10,6 @@ import java.util.stream.Collectors;
 public class StockByStockId {
 
     private String stockId;
-
     private Map<LocalDate, String> quotes;
 
     public StockByStockId(Stock stock){
@@ -19,7 +19,7 @@ public class StockByStockId {
 
     private Map<LocalDate, String> mapQuotes(Stock stock) {
         return stock.getQuotes().stream()
-                .collect(Collectors.toMap(quote -> quote.getDate(), quote -> quote.getPrice()));
+                .collect(Collectors.toMap(Quote::getDate, Quote::getPrice));
     }
 
 }

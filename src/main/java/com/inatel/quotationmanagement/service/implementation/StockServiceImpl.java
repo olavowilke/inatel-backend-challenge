@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class StockServiceImpl implements StockService {
@@ -27,7 +25,6 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public Stock createStock(CreateStock stock) {
-
         String stockId = stock.getStockId();
         Map<LocalDate, String> quoteMap = stock.getQuotes();
 
@@ -45,44 +42,17 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public StockByStockId getQuotesByStockId(String stockId) {
+    public List<StockByStockId> getQuotesByStockId(String stockId) {
         List<Stock> stocks = stockRepository.findByStockId(stockId);
 
-//        Map<String, List<Stock>> collect = stocks.stream()
-//                .collect(Collectors.groupingBy(Stock::getStockId));
-
-        List<List<Quote>> collect1 = stocks.stream()
-                .map(stock -> stock.getQuotes())
+        return stocks.stream()
+                .map(StockByStockId::new)
                 .collect(Collectors.toList());
+    }
 
-        List<String> collect2 = collect1.stream()
-                .flatMap(quotes -> {
-                    return quotes.stream()
-                            .map(quote -> quote.getPrice());
-                }).collect(Collectors.toList());
-
-
-        ;
-        /*
-
-            "<stockId, List<Stock>"
-
-            >list<Stock>
-            >>list<Quote>
-
-
-            <LocalDate date, String price>
-         */
-
-        //list<stock>
-
-        //list<quotes>
-        //date, price
-
-
-        //Map<date, price>
-
-        return null;
+    @Override
+    public List<Stock> findAll() {
+        return stockRepository.findAll();
     }
 
 }

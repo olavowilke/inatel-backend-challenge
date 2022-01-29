@@ -7,6 +7,8 @@ import com.inatel.quotationmanagement.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class StockController {
 
@@ -18,9 +20,14 @@ public class StockController {
         return stockService.createStock(stock);
     }
 
-    @GetMapping("/quote")
-    public StockByStockId getQuotesById(@PathVariable String stockId){
+    @GetMapping("/quotes")
+    public List<StockByStockId> getQuotesById(@PathVariable String stockId){
         return stockService.getQuotesByStockId(stockId);
+    }
+
+    @GetMapping
+    public List<Stock> getAllStocks(){
+        return stockService.findAll();
     }
 
 }
