@@ -1,12 +1,15 @@
 package com.inatel.quotationmanagement.service.implementation;
 
+import com.inatel.quotationmanagement.api.StockManagementApi;
 import com.inatel.quotationmanagement.data.Quote;
 import com.inatel.quotationmanagement.data.Stock;
 import com.inatel.quotationmanagement.data.dto.CreateStock;
 import com.inatel.quotationmanagement.data.dto.StockByStockId;
+import com.inatel.quotationmanagement.data.dto.StockFromApi;
 import com.inatel.quotationmanagement.repository.QuoteRepository;
 import com.inatel.quotationmanagement.repository.StockRepository;
 import com.inatel.quotationmanagement.service.StockService;
+import com.inatel.quotationmanagement.service.validation.StockValiator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,8 @@ public class StockServiceImpl implements StockService {
     private StockRepository stockRepository;
     @Autowired
     private QuoteRepository quoteRepository;
+    @Autowired
+    private StockManagementApi stockManagementApi;
 
     @Override
     public Stock createStock(CreateStock stock) {
@@ -36,8 +41,10 @@ public class StockServiceImpl implements StockService {
                 })
                 .collect(Collectors.toList());
 
-        quoteRepository.saveAll(quotes);
+        List<StockFromApi> stocksFromApi = stockManagementApi.checkStock();
+        StockValiator.validateStockExists(stocksFromApi, stockId);
 
+        quoteRepository.saveAll(quotes);
         return stockRepository.save(new Stock(stockId, quotes));
     }
 

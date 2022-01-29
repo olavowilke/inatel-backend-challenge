@@ -21,12 +21,12 @@ public class StockController {
     }
 
     @GetMapping("/quotes")
-    public List<StockByStockId> getQuotesById(@PathVariable String stockId){
+    public List<StockByStockId> getQuotesById(@PathVariable String stockId) {
         return stockService.getQuotesByStockId(stockId);
     }
 
     @GetMapping
-    public List<Stock> getAllStocks(){
+    public List<Stock> getAllStocks() {
         return stockService.findAll();
     }
 
