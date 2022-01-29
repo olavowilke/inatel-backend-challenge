@@ -3,9 +3,7 @@ package com.inatel.quotationmanagement.data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,11 +14,16 @@ public class Stock {
 
     @Id
     @EqualsAndHashCode.Include
+    @Column(name = "id")
     private UUID id;
 
     private String stockId;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "stock",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "quote_id"))
     private List<Quote> quotes;
 
     public Stock() {

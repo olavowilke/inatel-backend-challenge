@@ -6,7 +6,7 @@ import com.inatel.quotationmanagement.exception_handler.exception.StockNotFoundE
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class StockValiator {
+public class StockValidator {
 
     public static void validateStockExists(List<StockFromApi> stocks, String stockId) {
         List<StockFromApi> collect = stocks.stream()

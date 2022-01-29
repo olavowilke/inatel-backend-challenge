@@ -20,7 +20,7 @@ public class StockController {
         return stockService.createQuote(stock);
     }
 
-    @GetMapping("/quotes")
+    @GetMapping("/stock/{stockId}")
     public List<StockByStockId> getQuotesById(@PathVariable String stockId) {
         return stockService.getQuotesByStockId(stockId);
     }
