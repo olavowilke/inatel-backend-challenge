@@ -30,6 +30,16 @@ public class StockManagementApiService {
         return List.of(Objects.requireNonNull(stockFromApi));
     }
 
+    public void registerNewStock() {
+        String url = BASE_URL + "/stocks";
+        String requestJson = "{\"host\": \"localhost\",\"port\": \"8081\"}";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> entity = new HttpEntity<String>(requestJson,headers);
+        restTemplate.postForObject(url, entity, String.class);
+    }
+
     @CacheEvict(value = "stock-cache")
     public void deleteStockCache() {}
 

@@ -1,39 +1,38 @@
 package com.inatel.quotationmanagement.data;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
+@Table(name = "stock")
 public class Stock {
 
     @Id
-    @EqualsAndHashCode.Include
-    @Column(name = "id")
-    private UUID id;
+    private UUID uuid;
 
     private String stockId;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
-            name = "stock",
-            joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "quote_id"))
-    private List<Quote> quotes;
+            name = "stock_quote",
+            joinColumns = @JoinColumn(name = "stock_uuid"),
+            inverseJoinColumns = @JoinColumn(name = "quote_uuid"))
+    private Set<Quote> quotes = new HashSet<>();
 
     public Stock() {
-        this.id = UUID.randomUUID();
+        this.uuid = UUID.randomUUID();
     }
 
     public Stock(String stockId, List<Quote> quotes) {
         this();
         this.stockId = stockId;
-        this.quotes = quotes;
+        this.quotes = new HashSet<>(quotes);
     }
 
 }

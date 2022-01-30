@@ -21,7 +21,7 @@ public class StockController {
     }
 
     @GetMapping("/stock/{stockId}")
-    public List<StockByStockId> getQuotesById(@PathVariable String stockId) {
+    public StockByStockId getQuotesById(@PathVariable String stockId) {
         return stockService.getQuotesByStockId(stockId);
     }
 

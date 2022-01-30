@@ -11,7 +11,7 @@ public interface StockService {
 
     Stock createQuote(CreateStock stock);
 
-    List<StockByStockId> getQuotesByStockId(String stockId);
+    StockByStockId getQuotesByStockId(String stockId);
 
     List<Stock> findAll();
 
