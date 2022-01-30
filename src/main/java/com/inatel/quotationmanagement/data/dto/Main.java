@@ -1,19 +1,5 @@
 package com.inatel.quotationmanagement.data.dto;
 
-import com.inatel.quotationmanagement.data.Quote;
-import com.inatel.quotationmanagement.data.Stock;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
-import org.apache.tomcat.jni.Local;
-
-import javax.annotation.processing.Generated;
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 public class Main {
 
 //    public static void main(String[] args) {

@@ -35,7 +35,7 @@ public class StockController {
     }
 
     @DeleteMapping("/stockcache")
-    public void deleteCache(){
+    public void deleteCache() {
         stockService.deleteStockCache();
     }
 

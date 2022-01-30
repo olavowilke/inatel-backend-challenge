@@ -12,7 +12,7 @@ public class StockByStockId {
     private String stockId;
     private Map<LocalDate, String> quotes;
 
-    public StockByStockId(Stock stock){
+    public StockByStockId(Stock stock) {
         this.stockId = stock.getStockId();
         this.quotes = mapQuotes(stock);
     }

@@ -19,7 +19,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseBody
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(StockNotFoundException.class)
-    public ResponseError handle(StockNotFoundException ex){
+    public ResponseError handle(StockNotFoundException ex) {
         ex.printStackTrace();
         return new ResponseError(ex.getMessage());
     }
