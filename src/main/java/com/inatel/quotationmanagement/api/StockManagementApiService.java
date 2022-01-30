@@ -23,6 +23,9 @@ public class StockManagementApiService {
     @Value("${stock-mgmt-url}")
     private String stockMgmtUrl;
 
+    @Value("${server.port}")
+    private String serverPort;
+
     @Autowired
     private RestTemplate restTemplate;
 
@@ -41,7 +44,7 @@ public class StockManagementApiService {
     @PostConstruct
     public void register() {
         String url = stockMgmtUrl + "/notification";
-        String requestJson = new Gson().toJson(new HostDto("localhost", "8081"));
+        String requestJson = new Gson().toJson(new HostDto("localhost", serverPort));
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
