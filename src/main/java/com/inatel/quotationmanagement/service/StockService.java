@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface StockService {
 
-    Stock createQuote(CreateStock stock);
+    Stock createStock(CreateStock stock);
 
     StockByStockId getQuotesByStockId(String stockId);
 

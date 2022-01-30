@@ -1,7 +1,10 @@
 package com.inatel.quotationmanagement.api;
 
+import com.google.gson.Gson;
+import com.inatel.quotationmanagement.api.dto.HostDto;
 import com.inatel.quotationmanagement.api.dto.StockFromApi;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpEntity;
@@ -17,40 +20,32 @@ import java.util.Objects;
 @Component
 public class StockManagementApiService {
 
-    private static final String BASE_URL = "http://localhost:8080";
+    @Value("${stock-mgmt-url}")
+    private String stockMgmtUrl;
 
     @Autowired
     private RestTemplate restTemplate;
 
     @Cacheable(value = "stock-cache")
     public List<StockFromApi> getAllStocks() {
-        String url = BASE_URL + "/stock";
+        String url = stockMgmtUrl + "/stock";
         StockFromApi[] stockFromApi = restTemplate.getForEntity(url, StockFromApi[].class).getBody();
 
         return List.of(Objects.requireNonNull(stockFromApi));
     }
 
-    public void registerNewStock() {
-        String url = BASE_URL + "/stocks";
-        String requestJson = "{\"host\": \"localhost\",\"port\": \"8081\"}";
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<String> entity = new HttpEntity<String>(requestJson,headers);
-        restTemplate.postForObject(url, entity, String.class);
-    }
-
     @CacheEvict(value = "stock-cache")
-    public void deleteStockCache() {}
+    public void deleteStockCache() {
+    }
 
     @PostConstruct
     public void register() {
-        String url = BASE_URL + "/notification";
-        String requestJson = "{\"host\": \"localhost\",\"port\": \"8081\"}";
+        String url = stockMgmtUrl + "/notification";
+        String requestJson = new Gson().toJson(new HostDto("localhost", "8081"));
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> entity = new HttpEntity<String>(requestJson,headers);
+        HttpEntity<String> entity = new HttpEntity<String>(requestJson, headers);
         restTemplate.postForObject(url, entity, String.class);
     }
 

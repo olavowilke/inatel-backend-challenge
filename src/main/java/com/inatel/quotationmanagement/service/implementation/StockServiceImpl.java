@@ -22,12 +22,9 @@ public class StockServiceImpl implements StockService {
     private StockManagementApiService stockManagementApiService;
 
     @Override
-    public Stock createQuote(CreateStock stock) {
-        List<StockFromApi> cachedStocks = stockManagementApiService.getAllStocks();
-        List<StockFromApi> stockFromApis = StockValidator.filterCachedStocks(cachedStocks, stock.getStockId());
-        StockValidator.validateCachedStock(stockFromApis, stock);
-
-
+    public Stock createStock(CreateStock stock) {
+        List<StockFromApi> stocksFromApi = stockManagementApiService.getAllStocks();
+        StockValidator.validateStockFromAPi(stocksFromApi, stock.getStockId());
 
         Stock byStockId = stockRepository.findByStockId(stock.getStockId());
         Stock stock1 = StockValidator.validateStock(stock, byStockId);

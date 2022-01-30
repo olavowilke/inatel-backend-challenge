@@ -4,20 +4,22 @@ import com.inatel.quotationmanagement.api.dto.StockFromApi;
 import com.inatel.quotationmanagement.data.Quote;
 import com.inatel.quotationmanagement.data.Stock;
 import com.inatel.quotationmanagement.data.dto.CreateStock;
+import com.inatel.quotationmanagement.exception_handler.exception.StockNotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class StockValidator {
 
-    public static List<StockFromApi> filterCachedStocks(List<StockFromApi> stocks, String stockId) {
-        List<StockFromApi> collect = stocks.stream()
+    public static StockFromApi validateStockFromAPi(List<StockFromApi> stocks, String stockId) {
+        Optional<StockFromApi> first = stocks.stream()
                 .filter(stock -> stock.getId().equalsIgnoreCase(stockId))
-                .collect(Collectors.toList());
+                .findFirst();
 
-        return collect;
+        return first.orElseThrow(() -> new StockNotFoundException("Stock does not exist"));
     }
 
     public static Stock validateStock(CreateStock createStock, Stock stockById) {
@@ -26,7 +28,6 @@ public class StockValidator {
 
     private static Stock addQuotesToStock(Stock stockById, CreateStock createStock) {
         List<Quote> quotes = getQuotes(createStock);
-
         quotes.forEach(quote -> stockById.getQuotes().add(quote));
 
         return stockById;
@@ -49,11 +50,7 @@ public class StockValidator {
                     return new Quote(date, price);
                 })
                 .collect(Collectors.toList());
+
         return quotes;
-    }
-
-    public static CreateStock validateCachedStock(List<StockFromApi> stockFromApis, CreateStock stock) {
-
-        return stockFromApis.isEmpty()
     }
 }
