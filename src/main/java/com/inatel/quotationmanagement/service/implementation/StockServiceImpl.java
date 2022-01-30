@@ -16,6 +16,8 @@ import java.util.List;
 @Service
 public class StockServiceImpl implements StockService {
 
+    private String review = "review";
+
     @Autowired
     private StockRepository stockRepository;
     @Autowired
