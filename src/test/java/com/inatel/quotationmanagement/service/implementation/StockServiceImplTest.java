@@ -40,10 +40,8 @@ public class StockServiceImplTest {
     @Mock
     private StockValidator stockValidator;
 
-
     private CreateStock createStock;
     private Stock stock;
-    private StockFromApi stockFromApi;
     private List<StockFromApi> stocksFromApi;
 
     @BeforeEach
@@ -107,7 +105,7 @@ public class StockServiceImplTest {
     }
 
     @Test
-    public void findAll_Success(){
+    public void findAll_Success() {
         when(stockRepository.findAll()).thenReturn(List.of());
 
         stockService.findAll();
@@ -116,15 +114,12 @@ public class StockServiceImplTest {
     }
 
     @Test
-    public void deleteStockCache(){
+    public void deleteStockCache() {
         doNothing().when(stockManagementApiServiceMock).deleteStockCache();
 
         stockService.deleteStockCache();
 
         verify(stockManagementApiServiceMock, times(1)).deleteStockCache();
     }
-
-
-
 
 }

@@ -46,7 +46,6 @@ public class StockServiceImpl implements StockService {
         return stockRepository.findAll();
     }
 
-
     @Override
     public void deleteStockCache() {
         stockManagementApiService.deleteStockCache();
